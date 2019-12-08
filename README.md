@@ -1,2 +1,2 @@
 # timeTracker
-Repository for simple tame tracker
+Repository for simple time tracker
