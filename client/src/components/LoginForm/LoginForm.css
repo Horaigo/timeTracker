@@ -1,0 +1,15 @@
+.login-data {
+    flex-direction: column;
+    justify-content: space-around;
+    height: 40%;
+}
+.login-label {
+    font-size: 25px;
+}
+.login-input {
+    line-height: 35px;
+    font-size: 35px;
+}
+.login-placement_buttons{
+    display: flex;
+}
