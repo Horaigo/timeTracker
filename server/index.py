@@ -1,9 +1,8 @@
 from flask import Flask
-app = Flask(__name__)
+from routes.test_route import test_route
 
-@app.route('/')
-def hello_world():
-    return 'Hello World!'
+app = Flask(__name__)
+app.register_blueprint(test_route)
 
 if __name__ == '__main__':
     app.run()
