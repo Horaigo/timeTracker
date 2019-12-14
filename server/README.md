@@ -9,4 +9,4 @@
 ## Add new packege
 After package additional (like `pip install ...`):
 - `pip freeze > requirements.txt` (be carefull. Don't create new file)
-- Add package name and version in `requirements.txt` manualy
+- Or add package name and version in `requirements.txt` manualy
