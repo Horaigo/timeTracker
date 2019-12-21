@@ -13,19 +13,72 @@ class TaskBoardComp extends React.Component {
         return(
             <div className="task-board-container">
                 <ul className="task-board">
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
-                    <TaskComp/>
+                    <TaskComp
+                      info={{
+                          name: 'test',
+                          currentTime: new Date(),
+                          currentDate: new Date(),
+                          date1: new Date(2019, 11, 31),
+                          date2: new Date(2020, 0, 1),
+                          timeSpendFrom: new Date(2019, 11, 1, 10, 15),
+                          timeSpendTo: new Date(2019, 11, 1, 9, 40),
+                          desc: 'ЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоу'
+                      }}/>
+                      <TaskComp
+                      info={{
+                          name: 'test',
+                          currentTime: new Date(),
+                          currentDate: new Date(),
+                          date1: new Date(2019, 11, 31),
+                          date2: new Date(2020, 0, 1),
+                          timeSpendFrom: new Date(2019, 11, 1, 10, 15),
+                          timeSpendTo: new Date(2019, 11, 1, 9, 40),
+                          desc: 'ЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоу'
+                      }}/>
+                      <TaskComp
+                      info={{
+                          name: 'test',
+                          currentTime: new Date(),
+                          currentDate: new Date(),
+                          date1: new Date(2019, 11, 31),
+                          date2: new Date(2020, 0, 1),
+                          timeSpendFrom: new Date(2019, 11, 1, 10, 15),
+                          timeSpendTo: new Date(2019, 11, 1, 9, 40),
+                          desc: 'ЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоу'
+                      }}/>
+                      <TaskComp
+                      info={{
+                          name: 'test',
+                          currentTime: new Date(),
+                          currentDate: new Date(),
+                          date1: new Date(2019, 11, 31),
+                          date2: new Date(2020, 0, 1),
+                          timeSpendFrom: new Date(2019, 11, 1, 10, 15),
+                          timeSpendTo: new Date(2019, 11, 1, 9, 40),
+                          desc: 'ЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоу'
+                      }}/>
+                      <TaskComp
+                      info={{
+                          name: 'test',
+                          currentTime: new Date(),
+                          currentDate: new Date(),
+                          date1: new Date(2019, 11, 31),
+                          date2: new Date(2020, 0, 1),
+                          timeSpendFrom: new Date(2019, 11, 1, 10, 15),
+                          timeSpendTo: new Date(2019, 11, 1, 9, 40),
+                          desc: 'ЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоу'
+                      }}/>
+                      <TaskComp
+                      info={{
+                          name: 'test',
+                          currentTime: new Date(),
+                          currentDate: new Date(),
+                          date1: new Date(2019, 11, 31),
+                          date2: new Date(2020, 0, 1),
+                          timeSpendFrom: new Date(2019, 11, 1, 10, 15),
+                          timeSpendTo: new Date(2019, 11, 1, 9, 40),
+                          desc: 'ЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоуЙоу'
+                      }}/>
                 </ul>
             </div>
         );
