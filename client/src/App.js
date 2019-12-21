@@ -7,7 +7,7 @@ import MainFormComp from './components/MainForm/mainForm';
 
 function App() {
   return (
-    MainFormComp()
+    <MainFormComp/>
   );
 }
 

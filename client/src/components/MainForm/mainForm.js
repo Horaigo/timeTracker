@@ -1,30 +1,37 @@
 import React from 'react';
 import '../../App.css';
 import './mainForm.css';
+import TaskBoardComp from '../TaskBoard/TaskBoard.js';
 
-function mainForm() {
-  return (
-    <div className="page">
-        <div className="form">
-            <div className="form-title">Главное меню</div>
-            <div className="form-page">
-                <div className="workzone">
-                    <div className="task-board">
+class MainFormComp extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value: ''};
+    }
 
-                    </div>
-                    <div className="sidemenu">
-                        <div className="button-container">
-                            
-                        </div>
-                        <div className="task-info">
-
+    render() {
+        return (
+            <div className="page">
+                <div className="form">
+                    <div className="form-title">Главное меню</div>
+                    <div className="form-page">
+                        <div className="workzone">
+                            <div className="sidemenu">
+                                <div className="task-add-button">
+                                    Добавить задачу
+                                </div>
+                                <div className="task-info">
+                                    <div className="task-info-title">Доп. информация</div>
+                                </div>
+                            </div>
+                            <TaskBoardComp/>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-  );
+        );
+    }
 }
 
-export default mainForm;
+
+export default MainFormComp;
