@@ -14,7 +14,7 @@ def get_time_units():
         result.append(time_unit)
     return jsonify(result=result)
 
-@time_units_route.route('/timeUnits/', method=['POST'])
+@time_units_route.route('/timeUnits/', methods=['POST'])
 def incert_time_unit():
     req_data = request.get_json()
     time_units_col.insert_one(req_data).inserted_id
