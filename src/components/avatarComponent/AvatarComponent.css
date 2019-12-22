@@ -1,0 +1,8 @@
+.photo-container {
+  border-radius: 1px;
+}
+.photo {
+  width: 300px;
+  height: 200px;
+  border-radius: 0 0 5px 5px;
+}

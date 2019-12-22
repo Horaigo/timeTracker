@@ -1,0 +1,8 @@
+.login {
+  display: flex;
+  flex-flow: column;
+  width: 100%;
+}
+.login p {
+  width: 50px;
+}
