@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../App.css';
 import './Task.css';
 
 class TaskComp extends React.Component {

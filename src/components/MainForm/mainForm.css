@@ -1,13 +1,13 @@
-.form {
+.page-form {
     top: 5%;
     width: 90%;
     height: 90%;
     overflow: hidden;
 }
-.form-title {
+.page-form-title {
     height: 5%;
 }
-.form-page {
+.page-form-page {
     margin-left: 0;
     margin-right: 0;
     height: 95%;

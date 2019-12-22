@@ -98,10 +98,10 @@ class MainFormComp extends React.Component {
 
     render() {
         return (
-            <div className="page">
-                <div className="form">
-                    <div className="form-title">Главное меню</div>
-                    <div className="form-page">
+            <div className="page page-page">
+                <div className="form page-form">
+                    <div className="form-title page-form-title">Главное меню</div>
+                    <div className="form-page page-form-page">
                         <div className="workzone">
                             <div className="sidemenu">
                                 <div className="task-add-button" onClick={this.addTask.bind(this)}>

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../App.css';
 import './RegForm.css';
 
 class RegFormComp extends React.Component {
@@ -7,6 +6,11 @@ class RegFormComp extends React.Component {
     super(props);
     this.state = {value: ''};
   }
+
+  goLogin() {
+    document.location.href="/login"
+  }
+
   render() {
     return (
       <div className="page">
@@ -26,7 +30,7 @@ class RegFormComp extends React.Component {
                   <div className="form-label">Повторите пароль:</div>
                   <input type="password"></input>
               </div>
-              <div className="form-button">
+              <div className="form-button" onClick={this.goLogin}>
                   Зарегистрироваться
               </div>
           </div>

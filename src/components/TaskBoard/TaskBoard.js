@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../App.css';
 import './TaskBoard.css';
 import TaskComp from '../Task/Task.js';
 

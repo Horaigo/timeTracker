@@ -1,5 +1,4 @@
 import React from 'react';
-import '../../App.css';
 import './LoginForm.css';
 
 class LoginFormComp extends React.Component {
@@ -8,12 +7,20 @@ class LoginFormComp extends React.Component {
         this.state = {value: ''};
     }
 
+    goReg() {
+        document.location.href="/register"
+    }
+
+    goMain() {
+        document.location.href="/page"
+    }
+
     render() {
         return (
             <div className="page">
                 <div className="form">
                     <div className="form-title">Авторизация</div>
-                    <div className="form-page">
+                    <div className="form-page login-form-page">
                         <div className="login-data">
                             <div className="form-label login-label">Имя пользователя(логин):</div>
                             <input className="login-input" type="text"></input>
@@ -25,10 +32,10 @@ class LoginFormComp extends React.Component {
                         
                     </div>
                     <div className="login-placement_buttons">
-                        <div className="form-button form-button_mini">
+                        <div className="form-button form-button_mini" onClick={this.goReg}>
                             Регистрация
                         </div>
-                        <div className="form-button form-button_mini">
+                        <div className="form-button form-button_mini" onClick={this.goMain}>
                             Вход
                         </div>
                     </div>
