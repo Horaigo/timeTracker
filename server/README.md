@@ -1,6 +1,7 @@
 # TimeTracker Server
 ## Local startup:
 
+1. `virtualenv venv`
 1. `venv\Scripts\activate.bat`
 1. `pip install -r requirements.txt`
 1. `python index.py`
