@@ -8,6 +8,8 @@ class TaskComp extends React.Component {
         this.state = {
             value: '',
             name: props.name,
+            editId: null,
+            deleteId: null
         };
     }
 
@@ -50,7 +52,7 @@ class TaskComp extends React.Component {
         }
         var result = '';
         if(time1 !== '' && time2 !== '') {
-            result = this.getTimeFromMilsec(this.props.info.timeSpendFrom - this.props.info.timeSpendTo);
+            result = this.getTimeFromMilsec(this.props.info.timeSpendTo - this.props.info.timeSpendFrom);
         }
         return result;
     }
@@ -78,12 +80,28 @@ class TaskComp extends React.Component {
         }
         return result;
     }
+
+    setEditId(key) {
+        this.props.updateEditId(key);
+    }
+
+    setDeleteId(key) {
+        this.props.updateDeleteId(key);
+    }
     
     render() {
         return(
             <div className="task">
                 <div className="task-title">
-                    {this.props.info.name}
+                    <div id={'name'+this.props.info.key}>{this.props.info.name}</div>
+                    <div className="task-actions">
+                        <div className="task-edit" onClick={this.setEditId.bind(this, this.props.info.key)}>
+                            Изменить
+                        </div>
+                        <div className="task-delete" onClick={this.setDeleteId.bind(this, this.props.info.key)}>
+                            Удалить
+                        </div>
+                    </div>
                 </div>
                 <div className="task-datetime">
                     Дата и время по задаче:
@@ -93,18 +111,10 @@ class TaskComp extends React.Component {
                         <div className="task-datetime-title">
                             Дата создания: 
                         </div>
-                        <div className="task-datetime-content">
+                        <div className="task-datetime-content" id={'curDate'+this.props.info.key}>
                             {this.checkDatetimeItem(this.props.info.currentDate.getDate())}.
                             {this.checkDatetimeItem(this.props.info.currentDate.getMonth()+1)}.
                             {this.checkDatetimeItem(this.props.info.currentDate.getFullYear())}
-                        </div>
-                    </div>
-                    <div className="task-date-period">
-                        <div className="task-datetime-title">
-                            Затраченные дни: 
-                        </div>
-                        <div className="task-datetime-content">
-                        {this.checkDate(this.props.info.date1, this.props.info.date2)}
                         </div>
                     </div>
                 </div>
@@ -113,7 +123,7 @@ class TaskComp extends React.Component {
                         <div className="task-datetime-title">
                             Время создания: 
                         </div>
-                        <div className="task-datetime-content">
+                        <div className="task-datetime-content" id={'curTime'+this.props.info.key}>
                             {this.checkDatetimeItem(this.props.info.currentTime.getHours())}:
                             {this.checkDatetimeItem(this.props.info.currentTime.getMinutes())}
                         </div>
@@ -122,8 +132,8 @@ class TaskComp extends React.Component {
                         <div className="task-datetime-title">
                             Затраченное время: 
                         </div>
-                        <div className="task-datetime-content">
-                            {this.checkTime(this.props.info.timeSpendFrom, this.props.info.timeSpendTo)}
+                        <div className="task-datetime-content" id={'time'+this.props.info.key}>
+                            {this.props.info.timeSpend}
                         </div>
                     </div>
                 </div>
@@ -131,7 +141,7 @@ class TaskComp extends React.Component {
                     <div className="desc-title">
                         Описание задачи:
                     </div>
-                    <div className="desc-info">
+                    <div className="desc-info" id={'desc'+this.props.info.key}>
                         {this.props.info.desc}
                     </div>
                 </div>

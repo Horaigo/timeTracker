@@ -107,3 +107,22 @@
 .task-info-desc1 {
     height: 50px;
 }
+.task-info-desc2 {
+    height: 400px;
+}
+.task-info-datetime-string {
+    justify-content: space-between;
+    padding-right: 12px;
+    margin-top: 5px;
+
+}
+.task-info-datetime {
+    width: 120px !important;
+    border-radius: 2px;
+}
+.task-info-datetime-string input {
+    background-color: #FFF !important;
+}
+.task-info-datetime-string input:hover {
+    background-color: #FFF !important;
+}
