@@ -1,8 +1,11 @@
 from flask import Flask
 from routes.test_route import test_route
 from routes.time_units_route import time_units_route
+from routes.auth import auth
 
 app = Flask(__name__)
+
+app.register_blueprint(auth)
 app.register_blueprint(test_route)
 app.register_blueprint(time_units_route)
 
