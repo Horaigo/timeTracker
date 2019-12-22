@@ -40,6 +40,44 @@ class TaskComp extends React.Component {
         }
         return (hours+':'+minutes)
     }
+
+    checkTime(time1, time2) {
+        if (!time1) {
+            time1='';
+        }
+        if (!time2) {
+            time2='';
+        }
+        var result = '';
+        if(time1 !== '' && time2 !== '') {
+            result = this.getTimeFromMilsec(this.props.info.timeSpendFrom - this.props.info.timeSpendTo);
+        }
+        return result;
+    }
+
+    checkDate(date1, date2) {
+        if (!date1) {
+            date1='';
+        }
+        if (!date2) {
+            date2='';
+        }
+        var result = '';
+        if (date1 !== '' || date2 !== '') {
+            if (date1 !== '') {
+                date1 = this.checkDatetimeItem(this.props.info.date1.getDate()) + '.' 
+                + this.checkDatetimeItem(this.props.info.date1.getMonth()+1) + '.'
+                + this.checkDatetimeItem(this.props.info.date1.getFullYear());
+            }
+            if (date2 !== '') {
+                date2 = this.checkDatetimeItem(this.props.info.date2.getDate()) + '.' 
+                + this.checkDatetimeItem(this.props.info.date2.getMonth()+1) + '.'
+                + this.checkDatetimeItem(this.props.info.date2.getFullYear());
+            }
+            result = date1 + ' - ' + date2;
+        }
+        return result;
+    }
     
     render() {
         return(
@@ -56,7 +94,9 @@ class TaskComp extends React.Component {
                             Дата создания: 
                         </div>
                         <div className="task-datetime-content">
-                            {this.checkDatetimeItem(this.props.info.currentDate.getDate())}.{this.checkDatetimeItem(this.props.info.currentDate.getMonth()+1)}.{this.checkDatetimeItem(this.props.info.currentDate.getFullYear())}
+                            {this.checkDatetimeItem(this.props.info.currentDate.getDate())}.
+                            {this.checkDatetimeItem(this.props.info.currentDate.getMonth()+1)}.
+                            {this.checkDatetimeItem(this.props.info.currentDate.getFullYear())}
                         </div>
                     </div>
                     <div className="task-date-period">
@@ -64,8 +104,7 @@ class TaskComp extends React.Component {
                             Затраченные дни: 
                         </div>
                         <div className="task-datetime-content">
-                        {this.checkDatetimeItem(this.props.info.date1.getDate())}.{this.checkDatetimeItem(this.props.info.date1.getMonth()+1)}.{this.checkDatetimeItem(this.props.info.date1.getFullYear())} - 
-                        {this.checkDatetimeItem(this.props.info.date2.getDate())}.{this.checkDatetimeItem(this.props.info.date2.getMonth()+1)}.{this.checkDatetimeItem(this.props.info.date2.getFullYear())}
+                        {this.checkDate(this.props.info.date1, this.props.info.date2)}
                         </div>
                     </div>
                 </div>
@@ -75,7 +114,8 @@ class TaskComp extends React.Component {
                             Время создания: 
                         </div>
                         <div className="task-datetime-content">
-                            {this.checkDatetimeItem(this.props.info.currentTime.getHours())}:{this.checkDatetimeItem(this.props.info.currentTime.getMinutes())}
+                            {this.checkDatetimeItem(this.props.info.currentTime.getHours())}:
+                            {this.checkDatetimeItem(this.props.info.currentTime.getMinutes())}
                         </div>
                     </div>
                     <div className="task-time-period">
@@ -83,7 +123,7 @@ class TaskComp extends React.Component {
                             Затраченное время: 
                         </div>
                         <div className="task-datetime-content">
-                            {this.getTimeFromMilsec(this.props.info.timeSpendFrom - this.props.info.timeSpendTo)}
+                            {this.checkTime(this.props.info.timeSpendFrom, this.props.info.timeSpendTo)}
                         </div>
                     </div>
                 </div>
