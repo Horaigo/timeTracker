@@ -56,7 +56,7 @@ def insert_time_unit():
         time_unit['user_id'] = request.cookies.get('user_id')
 
     inserted_id = time_units_col.insert_one(time_unit).inserted_id
-    return str(inserted_id), 204
+    return str(inserted_id), 200
 
 
 @time_units_route.route('/timeUnits', methods=['PATCH'])
@@ -86,6 +86,16 @@ def update_time_unit():
         }, {
             '$set': changes
         })
-        return str(result.upserted_id), 204
+        return str(result.upserted_id), 200
     else:
         return 'Wrong arguments', 400
+
+@time_units_route.route('/timeUnits', methods=['DELETE'])
+def delete_time_unit():
+    req_data = request.args
+
+    if 'unit_id' not in req_data or req_data['unit_id'] == '':
+        return 'Wrong arguments', 400
+
+    result = time_units_col.delete_one({'_id': ObjectId(req_data['unit_id'])})
+    return 'Successfuly deleted', 200
