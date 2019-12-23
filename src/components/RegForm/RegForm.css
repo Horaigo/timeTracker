@@ -1,0 +1,14 @@
+.check-password {
+    justify-content: space-between;
+}
+.password-fail {
+    background-color: red;
+    color: #FFF;
+    padding: 0 5px;
+    border-radius: 10px;
+}
+.password-success {
+    background-color: lightgreen;
+    padding: 0 5px;
+    border-radius: 10px;
+}
