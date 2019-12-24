@@ -12,17 +12,17 @@ def login():
     req_data = request.get_json(force=True)
 
     if 'login' not in req_data or 'password' not in req_data:
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
     if req_data['login'] == '' or req_data['password'] == '':
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     if req_data == None:
-        return 'Unexpected error', 500
+        return jsonify(result='Unexpected error'), 500
     user = users_col.find_one({'login': req_data['login']})
     if user == None:
-        return 'Wrong login/password', 401
+        return jsonify(result='Wrong login / password'), 401
     if user['password'] != req_data['password']:
-        return 'Wrong login/password', 401
+        return jsonify(result='Wrong login / password'), 401
     else:
         return dumps(user), 200
     return jsonify(result='Unexpected error'), 500
