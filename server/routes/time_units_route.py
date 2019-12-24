@@ -13,7 +13,7 @@ time_units_route = Blueprint('time_units_route', __name__)
 
 @time_units_route.route('/timeUnits', methods=['GET'])
 def get_time_units():
-    req_data = request.args
+    req_data = request.get_json(force=True)
     query = {}
     if 'user_id' in req_data and req_data['user_id'] != '':
         query['user_id'] = req_data['user_id']
@@ -29,7 +29,7 @@ def get_time_units():
 
 @time_units_route.route('/timeUnits', methods=['POST'])
 def insert_time_unit():
-    req_data = request.args
+    req_data = request.get_json(force=True)
 
     if 'title' not in req_data or \
             'desc' not in req_data or \
@@ -61,7 +61,7 @@ def insert_time_unit():
 
 @time_units_route.route('/timeUnits', methods=['PATCH'])
 def update_time_unit():
-    req_data = request.args
+    req_data = request.get_json(force=True)
 
     if 'unit_id' not in req_data or req_data['unit_id'] == '':
         return 'Wrong arguments', 400
@@ -92,7 +92,7 @@ def update_time_unit():
 
 @time_units_route.route('/timeUnits', methods=['DELETE'])
 def delete_time_unit():
-    req_data = request.args
+    req_data = request.get_json(force=True)
 
     if 'unit_id' not in req_data or req_data['unit_id'] == '':
         return 'Wrong arguments', 400
