@@ -33,12 +33,14 @@ def insert_time_unit():
 
     if 'title' not in req_data or \
             'desc' not in req_data or \
-            'time' not in req_data:
+            'time' not in req_data or \
+            'user_id' not in req_data:
         return jsonify(result='Wrong arguments'), 400
 
     if req_data['title'] == '' or \
             req_data['desc'] == '' or \
-            req_data['time'] == '':
+            req_data['time'] == '' or \
+            req_data['user_id'] == '':
         return jsonify(result='Wrong arguments'), 400
 
     time_match = re.match(r"^([0-2]?[0-9]):([0-5][0-9])$", req_data['time'], re.M)
@@ -49,11 +51,12 @@ def insert_time_unit():
         'title': req_data['title'],
         'desc': req_data['desc'],
         'time': int(time_match.group(1)) * 60 + int(time_match.group(2)),
-        'creationDate': datetime.datetime.now()
+        'creationDate': datetime.datetime.now(),
+        'user_id': str(req_data['user_id'])
     }
 
-    if 'user_id' in request.cookies:  # TODO: Change cookie name
-        time_unit['user_id'] = request.cookies.get('user_id')
+    #if 'user_id' in request.cookies: TODO: Change cookie name
+    #    time_unit['user_id'] = request.cookies.get('user_id')
 
     inserted_id = time_units_col.insert_one(time_unit).inserted_id
     return jsonify(result=str(inserted_id)), 200
