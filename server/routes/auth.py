@@ -61,4 +61,4 @@ def register():
     user['password'] = req_data['password']
 
     user_id = users_col.insert_one(user).inserted_id
-    return 'Successfull registered', 204
+    return 'Successfull registered', 200
