@@ -34,16 +34,16 @@ def insert_time_unit():
     if 'title' not in req_data or \
             'desc' not in req_data or \
             'time' not in req_data:
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     if req_data['title'] == '' or \
             req_data['desc'] == '' or \
             req_data['time'] == '':
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     time_match = re.match(r"^([0-2]?[0-9]):([0-5][0-9])$", req_data['time'], re.M)
     if time_match.group() != req_data['time']:
-        return 'Wrong time', 400
+        return jsonify(result='Wrong time'), 400
 
     time_unit = {
         'title': req_data['title'],
@@ -56,7 +56,7 @@ def insert_time_unit():
         time_unit['user_id'] = request.cookies.get('user_id')
 
     inserted_id = time_units_col.insert_one(time_unit).inserted_id
-    return str(inserted_id), 200
+    return jsonify(result=str(inserted_id)), 200
 
 
 @time_units_route.route('/timeUnits', methods=['PATCH'])
@@ -64,7 +64,7 @@ def update_time_unit():
     req_data = request.args
 
     if 'unit_id' not in req_data or req_data['unit_id'] == '':
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     changes = {}
 
@@ -77,7 +77,7 @@ def update_time_unit():
     if 'time' in req_data and req_data['time'] != '':
         time_match = re.match(r"^([0-2]?[0-9]):([0-5][0-9])$", req_data['time'], re.M)
         if time_match.group() != req_data['time']:
-            return 'Wrong time', 400
+            return jsonify(result='Wrong time'), 400
         changes['time'] = int(time_match.group(1)) * 60 + int(time_match.group(2))
 
     if len(changes) != 0:
@@ -86,16 +86,16 @@ def update_time_unit():
         }, {
             '$set': changes
         })
-        return str(result.upserted_id), 200
+        return jsonify(result=str(result.upserted_id)), 200
     else:
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
 @time_units_route.route('/timeUnits', methods=['DELETE'])
 def delete_time_unit():
     req_data = request.args
 
     if 'unit_id' not in req_data or req_data['unit_id'] == '':
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     result = time_units_col.delete_one({'_id': ObjectId(req_data['unit_id'])})
-    return 'Successfuly deleted', 200
+    return jsonify(result='Successfuly deleted'), 200

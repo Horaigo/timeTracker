@@ -25,7 +25,7 @@ def login():
         return 'Wrong login/password', 401
     else:
         return dumps(user), 200
-    return 'Unexpected error', 500
+    return jsonify(result='Unexpected error'), 500
 
 
 @auth.route('/register', methods=['POST'])
@@ -36,17 +36,17 @@ def register():
             'last_name' not in req_data or\
             'login' not in req_data or\
             'password' not in req_data:
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     if req_data['first_name'] == '' or\
             req_data['last_name'] == '' or\
             req_data['login'] == '' or \
             req_data['password'] == '':
-        return 'Wrong arguments', 400
+        return jsonify(result='Wrong arguments'), 400
 
     user_check = users_col.find_one({'login': req_data['login']})
     if user_check is not None:
-        return 'User exist', 400
+        return jsonify(result='User exist'), 400
 
     user = {}
 
@@ -61,4 +61,4 @@ def register():
     user['password'] = req_data['password']
 
     user_id = users_col.insert_one(user).inserted_id
-    return 'Successfull registered', 200
+    return jsonify(result='Successfull registered'), 200
