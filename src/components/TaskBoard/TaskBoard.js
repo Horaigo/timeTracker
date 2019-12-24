@@ -31,10 +31,10 @@ class TaskBoardComp extends React.Component {
                             key={task.key}
                             info={{
                                 key: task.key,
-                                name: task.name,
-                                currentTime: task.currentTime,
-                                currentDate: task.currentDate,
-                                timeSpend: task.timeSpend,
+                                title: task.title,
+                                creation_time: new Date(task.creation_time),
+                                creation_date: new Date(task.creation_date),
+                                time: task.time,
                                 desc: task.desc
                             }}/>
                     )}

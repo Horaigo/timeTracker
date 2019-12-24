@@ -11,11 +11,33 @@ class LoginFormComp extends React.Component {
         document.location.href="/register"
     }
 
-    goMain() {
-        document.location.href="/page"
+    async goMain() {
+        var
+            login = (document.getElementById('login')).value,
+            pass = (document.getElementById('pass')).value;
+        if (login !== '' && pass !== '') {
+            var user = {
+                login: login,
+                password: pass
+            };
+            let response = await fetch('http://127.0.0.1:5000/login', {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+              body: JSON.stringify(user)
+            });
+            let result = await response.json();
+            if (result.result != "Wrong login / password") {
+                document.cookie = "userOid = " + result._id.$oid
+                document.location.href="/page"
+            }
+        }
     }
 
     render() {
+        document.cookie = "userOid = ";
         return (
             <div className="page">
                 <div className="form">
@@ -23,11 +45,11 @@ class LoginFormComp extends React.Component {
                     <div className="form-page login-form-page">
                         <div className="login-data">
                             <div className="form-label login-label">Имя пользователя(логин):</div>
-                            <input className="login-input" type="text"></input>
+                            <input className="login-input" type="text" id="login"></input>
                         </div>
                         <div className="login-data">
                             <div className="form-label login-label">Пароль:</div>
-                            <input className="login-input" type="password"></input>
+                            <input className="login-input" type="password" id="pass"></input>
                         </div>
                         
                     </div>
@@ -35,7 +57,7 @@ class LoginFormComp extends React.Component {
                         <div className="form-button form-button_mini" onClick={this.goReg}>
                             Регистрация
                         </div>
-                        <div className="form-button form-button_mini" onClick={this.goMain}>
+                        <div className="form-button form-button_mini" onClick={this.goMain.bind(this)}>
                             Вход
                         </div>
                     </div>

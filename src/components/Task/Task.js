@@ -6,7 +6,7 @@ class TaskComp extends React.Component {
         super(props);
         this.state = {
             value: '',
-            name: props.name,
+            title: props.title,
             editId: null,
             deleteId: null
         };
@@ -40,20 +40,6 @@ class TaskComp extends React.Component {
             minutes = '0' + minutes;
         }
         return (hours+':'+minutes)
-    }
-
-    checkTime(time1, time2) {
-        if (!time1) {
-            time1='';
-        }
-        if (!time2) {
-            time2='';
-        }
-        var result = '';
-        if(time1 !== '' && time2 !== '') {
-            result = this.getTimeFromMilsec(this.props.info.timeSpendTo - this.props.info.timeSpendFrom);
-        }
-        return result;
     }
 
     checkDate(date1, date2) {
@@ -92,7 +78,7 @@ class TaskComp extends React.Component {
         return(
             <div className="task">
                 <div className="task-title">
-                    <div id={'name'+this.props.info.key}>{this.props.info.name}</div>
+                    <div id={'title'+this.props.info.key}>{this.props.info.title}</div>
                     <div className="task-actions">
                         <div className="task-edit" onClick={this.setEditId.bind(this, this.props.info.key)}>
                             Изменить
@@ -111,9 +97,9 @@ class TaskComp extends React.Component {
                             Дата создания: 
                         </div>
                         <div className="task-datetime-content" id={'curDate'+this.props.info.key}>
-                            {this.checkDatetimeItem(this.props.info.currentDate.getDate())}.
-                            {this.checkDatetimeItem(this.props.info.currentDate.getMonth()+1)}.
-                            {this.checkDatetimeItem(this.props.info.currentDate.getFullYear())}
+                            {this.checkDatetimeItem(this.props.info.creation_date.getDate())}.
+                            {this.checkDatetimeItem(this.props.info.creation_date.getMonth()+1)}.
+                            {this.checkDatetimeItem(this.props.info.creation_date.getFullYear())}
                         </div>
                     </div>
                 </div>
@@ -123,8 +109,8 @@ class TaskComp extends React.Component {
                             Время создания: 
                         </div>
                         <div className="task-datetime-content" id={'curTime'+this.props.info.key}>
-                            {this.checkDatetimeItem(this.props.info.currentTime.getHours())}:
-                            {this.checkDatetimeItem(this.props.info.currentTime.getMinutes())}
+                            {this.checkDatetimeItem(this.props.info.creation_time.getHours())}:
+                            {this.checkDatetimeItem(this.props.info.creation_time.getMinutes())}
                         </div>
                     </div>
                     <div className="task-time-period">
@@ -132,7 +118,7 @@ class TaskComp extends React.Component {
                             Затраченное время: 
                         </div>
                         <div className="task-datetime-content" id={'time'+this.props.info.key}>
-                            {this.props.info.timeSpend}
+                            {this.props.info.time}
                         </div>
                     </div>
                 </div>

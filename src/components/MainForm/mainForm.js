@@ -13,11 +13,10 @@ class MainFormComp extends React.Component {
             renderEditFlag: false,
             editId: null,
             editData: {
-                name: null,
-                curTime: null,
-                times: null,
-                curDate: null,
-                dates: null,
+                title: null,
+                time: null,
+                creation_time: null,
+                creation_date: null,
                 desc: null
             },
             deleteId: null
@@ -29,7 +28,7 @@ class MainFormComp extends React.Component {
             this.setState({
                 editId: value,
                 editData: {
-                    name: (document.getElementById('name'+value)).textContent,
+                    title: (document.getElementById('title'+value)).textContent,
                     desc: (document.getElementById('desc'+value)).textContent
                 }
             });
@@ -37,7 +36,7 @@ class MainFormComp extends React.Component {
             this.setState({
                 editId: value,
                 editData: {
-                    name: (document.getElementById('name'+value)).textContent,
+                    title: (document.getElementById('title'+value)).textContent,
                     desc: (document.getElementById('desc'+value)).textContent,
                     time: (document.getElementById('time'+value)).textContent
                 }
@@ -45,37 +44,64 @@ class MainFormComp extends React.Component {
         }
     }
 
-    updateDeleteId = (value) => {
-        var tmp = [];
-        for (var key in this.state.taskList) {
-            if(this.state.taskList[key].key !== value) {
-                tmp.push(this.state.taskList[key])
+    async updateDeleteId(value) {
+        let response = await fetch('http://127.0.0.1:5000/timeUnits', {
+          method: 'DELETE',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+              unit_id: value
+          })
+        });
+        let result = await response.json();
+        if (result.result == "Successfuly deleted") {
+            var tmp = [];
+            for (var key in this.state.taskList) {
+                if(this.state.taskList[key].key !== value) {
+                    tmp.push(this.state.taskList[key])
+                }
             }
+            this.state.taskList = tmp;
+            this.forceUpdate();
         }
-        this.state.taskList = tmp;
-        this.forceUpdate();
     }
 
     addTask() {
         this.setState({renderFlag: true})
     }
 
-    createTask(taskList) {
+    async createTask(taskList) {
         var 
-            taskName = document.getElementById('task_name'),
+            taskName = document.getElementById('task_title'),
             taskDesc = document.getElementById('task_desc');
         taskName = taskName.value;
         taskDesc = taskDesc.value;
         if (taskName !== '' && taskDesc !== '') {
-            taskList.push({
-                key: taskList.length,
-                name: taskName,
-                currentTime: new Date(),
-                currentDate: new Date(),
-                timeSpend: null,
+            var singleTask = {
+                user_id: document.cookie.replace('userOid=', ''),
+                title: taskName,
+                creation_time: new Date(),
+                creation_date: new Date(),
+                time: '00:00',
                 desc: taskDesc
+            }
+            let response = await fetch('http://127.0.0.1:5000/timeUnits', {
+              method: 'POST',
+              mode: 'cors',
+              headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+              },
+              body: JSON.stringify(singleTask)
             });
-            this.setState({renderFlag: false});
+            let result = await response.json();
+            console.log(result)
+            if (result) {
+                singleTask.key = result.result;
+                taskList.push(singleTask);
+                this.setState({renderFlag: false});
+            }
         }
     }
 
@@ -83,20 +109,71 @@ class MainFormComp extends React.Component {
         this.setState({renderFlag: false, renderEditFlag: true});
     }
 
-    changeTask(taskList) {
-        for (var key in taskList) {
-            if(taskList[key].key === this.state.editId) {
-                taskList[key].name = (document.getElementById('task_name')).value;
-                taskList[key].desc = (document.getElementById('task_desc')).value;
-                taskList[key].timeSpend = (document.getElementById('task_time')).value;
-                this.setState({editId: null, editData: {}})
-                this.forceUpdate();
-                break;
+    async changeTask(taskList) {
+        let response = await fetch('http://127.0.0.1:5000/timeUnits', {
+          method: 'PATCH',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          },
+          body: JSON.stringify({
+              unit_id: this.state.editId,
+              title: (document.getElementById('task_title')).value,
+              desc: (document.getElementById('task_desc')).value,
+              time: (document.getElementById('task_time')).value
+          })
+        });
+        let result = await response.json();
+        if(result.result != 'Wrong arguments') {
+            for (var key in taskList) {
+                if(taskList[key].key === this.state.editId) {
+                    taskList[key].title = (document.getElementById('task_title')).value;
+                    taskList[key].desc = (document.getElementById('task_desc')).value;
+                    taskList[key].time = (document.getElementById('task_time')).value;
+                    this.setState({editId: null, editData: {}})
+                    this.forceUpdate();
+                    break;
+                }
             }
         }
     }
 
+    async getData() {
+        let response = await fetch('http://127.0.0.1:5000/timeUnits?user_id='+document.cookie.replace('userOid=', ''), {
+          method: 'GET',
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json;charset=utf-8'
+          }
+        });
+        let result = await response.json();
+        if (result && result.length != 0 && result.length != this.state.taskList.length) {
+            for(var key in result) {
+                let tmpObject = {
+                    key: result[key]._id,
+                    _id: result[key]._id,
+                    title: result[key].title,
+                    creation_time: result[key].creation_time,
+                    creation_date: result[key].creation_date,
+                    time: result[key].time,
+                    desc: result[key].desc
+                }
+                var tmpStr = tmpObject.time.split(':');
+                if (tmpStr[0].length < 2) {
+                    tmpStr[0] = '0' + tmpStr[0];
+                }
+                if (tmpStr[1].length < 2) {
+                    tmpStr[1] = '0' + tmpStr[1];
+                }
+                tmpObject.time = [tmpStr[0], tmpStr[1]].join(':');
+                this.state.taskList.push(tmpObject)
+            }
+            console.log(result)
+            this.forceUpdate()
+        }
+    }
     render() {
+        this.getData()
         return (
             <div className="page page-page">
                 <div className="form page-form">
@@ -113,7 +190,7 @@ class MainFormComp extends React.Component {
                                         <div className="task-info-content">
                                             <div className="task-info-content-top">
                                                 <div className="task-info-subtitle">Название:</div>
-                                                <textarea id="task_name" className="task-info-desc task-info-desc1"></textarea>
+                                                <textarea id="task_title" className="task-info-desc task-info-desc1"></textarea>
                                                 <div className="task-info-subtitle">Описание задачи:</div>
                                                 <textarea id="task_desc" className="task-info-desc"></textarea>
                                             </div>
@@ -130,13 +207,13 @@ class MainFormComp extends React.Component {
                                         <div className="task-info-content">
                                             <div className="task-info-content-top">
                                                 <div className="task-info-subtitle">Название:</div>
-                                                <textarea id="task_name" className="task-info-desc task-info-desc1" value={this.state.editData.name}></textarea>
+                                                <textarea id="task_title" className="task-info-desc task-info-desc1" defaultValue={this.state.editData.title}></textarea>
                                                 <div className="task-info-datetime-string">
                                                     <div className="task-info-subtitle">Затраченное время:</div>
-                                                    <input type="time" id="task_time" min="00:00" max="23:59" className="task-info-datetime" value={this.state.editData.time}></input>
+                                                    <input type="time" id="task_time" min="00:00" max="23:59" className="task-info-datetime" defaultValue={this.state.editData.time}></input>
                                                 </div>
                                                 <div className="task-info-subtitle">Описание задачи:</div>
-                                                <textarea id="task_desc" className="task-info-desc task-info-desc2" value={this.state.editData.desc} required></textarea>
+                                                <textarea id="task_desc" className="task-info-desc task-info-desc2" defaultValue={this.state.editData.desc} required></textarea>
                                             </div>
                                             <div className="task-info-content-button" onClick={this.changeTask.bind(this, this.state.taskList)}>Изменить</div>
                                         </div>  
@@ -146,7 +223,7 @@ class MainFormComp extends React.Component {
                             <TaskBoardComp
                                 tasks={this.state.taskList}
                                 updateEditId={this.updateEditId}
-                                updateDeleteId={this.updateDeleteId}/>
+                                updateDeleteId={this.updateDeleteId.bind(this)}/>
                         </div>
                     </div>
                 </div>
