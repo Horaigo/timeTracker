@@ -9,7 +9,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['POST'])
 def login():
-    req_data = request.args
+    req_data = request.get_json(force=True)
 
     if 'login' not in req_data or 'password' not in req_data:
         return 'Wrong arguments', 400
@@ -30,7 +30,7 @@ def login():
 
 @auth.route('/register', methods=['POST'])
 def register():
-    req_data = request.args
+    req_data = request.get_json(force=True)
 
     if 'first_name' not in req_data or\
             'last_name' not in req_data or\
