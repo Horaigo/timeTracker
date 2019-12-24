@@ -13,7 +13,7 @@ time_units_route = Blueprint('time_units_route', __name__)
 
 @time_units_route.route('/timeUnits', methods=['GET'])
 def get_time_units():
-    req_data = request.get_json(force=True)
+    req_data = request.args
     query = {}
     if 'user_id' in req_data and req_data['user_id'] != '':
         query['user_id'] = req_data['user_id']
