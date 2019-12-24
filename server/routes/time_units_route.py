@@ -34,12 +34,16 @@ def insert_time_unit():
     if 'title' not in req_data or \
             'desc' not in req_data or \
             'time' not in req_data or \
+            'creation_date' not in req_data or \
+            'creation_time' not in req_data or \
             'user_id' not in req_data:
         return jsonify(result='Wrong arguments'), 400
 
     if req_data['title'] == '' or \
             req_data['desc'] == '' or \
             req_data['time'] == '' or \
+            req_data['creation_date'] == '' or \
+            req_data['creation_time'] == '' or \
             req_data['user_id'] == '':
         return jsonify(result='Wrong arguments'), 400
 
@@ -51,7 +55,8 @@ def insert_time_unit():
         'title': req_data['title'],
         'desc': req_data['desc'],
         'time': int(time_match.group(1)) * 60 + int(time_match.group(2)),
-        'creationDate': datetime.datetime.now(),
+        'creation_date': req_data['creation_date'],
+         'creation_time': req_data['creation_time'],
         'user_id': str(req_data['user_id'])
     }
 
