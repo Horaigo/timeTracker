@@ -1,6 +1,7 @@
 # TimeTracker Server
 ## Local startup:
 
+1. `virtualenv venv`
 1. `venv\Scripts\activate.bat`
 1. `pip install -r requirements.txt`
 1. `python index.py`
@@ -16,3 +17,7 @@ After package additional (like `pip install ...`):
 `mongodb+srv://test:test@timetracker-ncrqc.mongodb.net/test`
 
 You can connect to database with MongoDB Compass: https://www.mongodb.com/download-center/compass
+
+## CORS
+Try to use `mode: 'cors'`:
+`fetch("http://localhost:5000/timeUnits", { method: 'get', mode: 'cors' }` (this should work ¯\\_(ツ)_/¯)
