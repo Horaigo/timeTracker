@@ -1,4 +1,4 @@
 const config = {
-    serverUrl: "http://127.0.0.1:5000"
+    serverUrl: "http://tensor-time-tracker-server.herokuapp.com/"
 };
 export default config;
