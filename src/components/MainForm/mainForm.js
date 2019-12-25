@@ -2,6 +2,7 @@ import React from 'react';
 import '../../App.css';
 import './mainForm.css';
 import TaskBoardComp from '../TaskBoard/TaskBoard.js';
+import config from '../../config';
 
 class MainFormComp extends React.Component {
     constructor(props) {
@@ -45,7 +46,7 @@ class MainFormComp extends React.Component {
     }
 
     async updateDeleteId(value) {
-        let response = await fetch('http://127.0.0.1:5000/timeUnits', {
+        let response = await fetch(config.serverUrl + '/timeUnits', {
           method: 'DELETE',
           mode: 'cors',
           headers: {
@@ -87,7 +88,7 @@ class MainFormComp extends React.Component {
                 time: '00:00',
                 desc: taskDesc
             }
-            let response = await fetch('http://127.0.0.1:5000/timeUnits', {
+            let response = await fetch(config.serverUrl + '/timeUnits', {
               method: 'POST',
               mode: 'cors',
               headers: {
@@ -110,7 +111,7 @@ class MainFormComp extends React.Component {
     }
 
     async changeTask(taskList) {
-        let response = await fetch('http://127.0.0.1:5000/timeUnits', {
+        let response = await fetch(config.serverUrl + '/timeUnits', {
           method: 'PATCH',
           mode: 'cors',
           headers: {
@@ -139,7 +140,7 @@ class MainFormComp extends React.Component {
     }
 
     async getData() {
-        let response = await fetch('http://127.0.0.1:5000/timeUnits?user_id='+document.cookie.replace('userOid=', ''), {
+        let response = await fetch(config.serverUrl + '/timeUnits?user_id='+document.cookie.replace('userOid=', ''), {
           method: 'GET',
           mode: 'cors',
           headers: {

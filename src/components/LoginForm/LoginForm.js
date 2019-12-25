@@ -1,5 +1,6 @@
 import React from 'react';
 import './LoginForm.css';
+import config from '../../config';
 
 class LoginFormComp extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class LoginFormComp extends React.Component {
                 login: login,
                 password: pass
             };
-            let response = await fetch('http://127.0.0.1:5000/login', {
+            let response = await fetch(config.serverUrl + '/login', {
               method: 'POST',
               mode: 'cors',
               headers: {

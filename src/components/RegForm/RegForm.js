@@ -1,5 +1,6 @@
 import React from 'react';
 import './RegForm.css';
+import config from '../../config';
 
 class RegFormComp extends React.Component {
   constructor(props) {
@@ -28,7 +29,7 @@ class RegFormComp extends React.Component {
           password: pass1
         };
 
-        let response = await fetch('http://127.0.0.1:5000/register', {
+        let response = await fetch(config.serverUrl + '/register', {
           method: 'POST',
           mode: 'cors',
           headers: {
